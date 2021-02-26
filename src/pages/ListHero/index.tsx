@@ -4,41 +4,51 @@ import React, { useEffect, useState } from 'react';
 import { FlatList, View } from 'react-native';
 import CardList from '../../components/CardList';
 import Input from '../../components/Input';
+import Pagination from '../../components/Pagination ';
 import { Hero } from '../../models/Hero';
 import { ENV } from '../../utils/Envs';
 import { BodyList, ContainerText, HeaderList, MarkerUnderline, SubTitle, Title, TitleList } from './styles';
+
+
+let debounce = setTimeout(() => { }, 0);
 
 const ListHero: React.FC = () => {
 
   const { API_BASE_URL, PRIVATE_KEY, PUBLIC_KEY } = ENV;
   const navigation = useNavigation();
 
+
   const [name, setName] = useState('');
   const [heros, setHeros] = useState<Hero[]>([]);
   const [pageInfo, setPageInfo] = useState({
     offset: 0,
-    limit: 0,
+    limit: 4,
     total: 0,
-    count: 0,
   })
 
   useEffect(() => {
-    async function loadHeros() {
+    loadHeros(0, '')
+  }, [])
+
+  async function loadHeros(offset: number, heroName: string) {
+    
+    try {
       const timestamp = Number(new Date())
       const hash = md5.create()
       hash.update(timestamp + PRIVATE_KEY + PUBLIC_KEY)
-      const response = await fetch(`${API_BASE_URL}characters?ts=${timestamp}&orderBy=name&limit=4&apikey=${PUBLIC_KEY}&hash=${hash.hex()}`)
+      const response = await fetch(`${API_BASE_URL}characters?ts=${timestamp}&offset=${offset}&orderBy=name&limit=4&apikey=${PUBLIC_KEY}&hash=${hash.hex()}`)
       const responseJson = await response.json()
-      
-      //setHeros(responseJson.data.results)
-      const { offset, limit,total,count,results } = responseJson.data;
-      console.log(results[0].name)
-      setHeros(results)
-      setPageInfo({ offset, limit,total,count })
+      if (responseJson.code === 200) {
+        const { offset, limit, total, results, } = responseJson.data;
+        setHeros(results)
+        setPageInfo({ offset, limit, total })
+      }
+
+    } catch (error) {
+      console.log('loadHeros', error)
     }
 
-    loadHeros()
-  }, [])
+  }
 
   function showDetails(id: number) {
     console.log(id)
@@ -55,6 +65,19 @@ const ListHero: React.FC = () => {
     />
   }
 
+  async function hanlePage(pageNumber: number) {
+
+    await loadHeros(pageNumber, name)
+  }
+
+  function handleChangeName(heroName: string) {
+    setName(heroName);
+    clearTimeout(debounce);
+    debounce = setTimeout(() => {
+      loadHeros(pageInfo.offset, heroName)
+    }, 2000)
+  }
+
   return (<View style={{ flex: 1 }}>
     <HeaderList>
       <ContainerText>
@@ -65,7 +88,7 @@ const ListHero: React.FC = () => {
       <Input
         label="Nome do Personagem"
         value={name}
-        onChange={setName}
+        onChange={handleChangeName}
       />
     </HeaderList>
     <BodyList >
@@ -73,7 +96,14 @@ const ListHero: React.FC = () => {
       <FlatList
         data={heros}
         renderItem={({ item }) => renderItem(item)}
-        keyExtractor={(hero,__) => String(hero.id)}
+        keyExtractor={(hero, __) => String(hero.id)}
+      />
+      <Pagination
+        offset={pageInfo.offset}
+        limit={pageInfo.limit}
+        maxCicleButton={3}
+        totalPage={pageInfo.total}
+        handlePage={hanlePage}
       />
     </BodyList>
   </View>);

@@ -19,6 +19,7 @@ export const MarkerUnderline = styled.View`
 export const Title = styled.Text`
     font-family: Roboto-Black;
     font-size:16px;
+    font-weight:bold;
     color:#D42026;  
 `;
 
