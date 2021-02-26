@@ -6,16 +6,17 @@ import { DescriptionStyled, ImageStyled, TouchableContainer } from './styles';
 import { ICardListProps } from './types';
 
 const CardList: React.FC<ICardListProps> = ({
-    id, description, uri, onPress
+    id, index, description, uri, onPress
 }) => {
 
-    const {width} = Dimensions.get('screen')
+    const { width } = Dimensions.get('screen')
     const slide = useRef(new Animated.Value(width)).current;
 
     const slideIn = () => {
         Animated.timing(slide, {
             toValue: 0,
             duration: 1000,
+            delay: 500 * index,
             useNativeDriver: true,
         }).start();
     };
@@ -32,12 +33,14 @@ const CardList: React.FC<ICardListProps> = ({
         >
             <Animated.View
                 style={{
-                    flexDirection:'row',
+                    flexDirection: 'row',
                     alignItems: 'center',
-                    paddingVertical:18,
-                    paddingHorizontal:25,
-                    backgroundColor:PALETTE.WHITE,
-                    transform: [{translateY:slide}] 
+                    paddingVertical: 18,
+                    paddingHorizontal: 25,
+                    backgroundColor: PALETTE.WHITE,
+                    borderBottomColor:PALETTE.PRIMARY,
+                    borderBottomWidth:1,
+                    transform: [{ translateX: slide }]
                 }}
             >
                 <ImageStyled source={{ uri }} />

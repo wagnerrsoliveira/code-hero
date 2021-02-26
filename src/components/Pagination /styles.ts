@@ -7,13 +7,13 @@ export const ContainerPaignation = styled.View`
   align-items: center;
   justify-content: center;
   background-color:${PALETTE.WHITE};
-  padding:30px 24px;  
+  padding:30px 24px;    
 `;
 
 export const ContainerNumbers = styled.View`
   flex-direction:row;
   background-color:${PALETTE.WHITE};
-  padding:0px 60px;    
+  padding:0px 60px;   
 `;
 
 export const CicleView = styled.View<IActive>`

@@ -1,12 +1,11 @@
 import { useNavigation } from '@react-navigation/native';
-import md5 from 'js-md5';
 import React, { useEffect, useState } from 'react';
-import { FlatList, View } from 'react-native';
+import { FlatList, ToastAndroid, View } from 'react-native';
 import CardList from '../../components/CardList';
 import Input from '../../components/Input';
 import Pagination from '../../components/Pagination ';
 import { Hero } from '../../models/Hero';
-import { ENV } from '../../utils/Envs';
+import { ApiService } from '../../services/ApiService';
 import { BodyList, ContainerText, HeaderList, MarkerUnderline, SubTitle, Title, TitleList } from './styles';
 
 
@@ -14,8 +13,9 @@ let debounce = setTimeout(() => { }, 0);
 
 const ListHero: React.FC = () => {
 
-  const { API_BASE_URL, PRIVATE_KEY, PUBLIC_KEY } = ENV;
   const navigation = useNavigation();
+
+  const api = new ApiService();
 
 
   const [name, setName] = useState('');
@@ -27,26 +27,23 @@ const ListHero: React.FC = () => {
   })
 
   useEffect(() => {
-    loadHeros(0, '')
+    loadHeros(name, pageInfo.offset)
   }, [])
 
-  async function loadHeros(offset: number, heroName: string) {
-    
-    try {
-      const timestamp = Number(new Date())
-      const hash = md5.create()
-      hash.update(timestamp + PRIVATE_KEY + PUBLIC_KEY)
-      const response = await fetch(`${API_BASE_URL}characters?ts=${timestamp}&offset=${offset}&orderBy=name&limit=4&apikey=${PUBLIC_KEY}&hash=${hash.hex()}`)
-      const responseJson = await response.json()
-      if (responseJson.code === 200) {
-        const { offset, limit, total, results, } = responseJson.data;
-        setHeros(results)
-        setPageInfo({ offset, limit, total })
-      }
 
-    } catch (error) {
-      console.log('loadHeros', error)
+  async function loadHeros(heroName: string, offset: number) {
+
+    const result = await api.geHeros(heroName, offset);
+
+    if (result?.isSuccess) {
+      const { offset, limit, total, results, } = result;
+      setHeros(results)
+      setPageInfo({ offset, limit, total })
+    } else {
+      ToastAndroid.show('Ocorreu um erro ao recuperar a lista de heroes, verrifique e tente novamente!', ToastAndroid.LONG);
     }
+
+
 
   }
 
@@ -55,9 +52,10 @@ const ListHero: React.FC = () => {
     navigation.navigate('DetailHero', { id })
   }
 
-  function renderItem(hero: Hero) {
+  function renderItem(hero: Hero, index: number) {
     const { id, thumbnail, name } = hero;
     return <CardList
+      index={index}
       id={id}
       uri={`${thumbnail.path}.${thumbnail.extension}`}
       description={name}
@@ -67,14 +65,14 @@ const ListHero: React.FC = () => {
 
   async function hanlePage(pageNumber: number) {
 
-    await loadHeros(pageNumber, name)
+    await loadHeros(name, pageNumber)
   }
 
   function handleChangeName(heroName: string) {
     setName(heroName);
     clearTimeout(debounce);
     debounce = setTimeout(() => {
-      loadHeros(pageInfo.offset, heroName)
+      loadHeros(heroName, pageInfo.offset)
     }, 2000)
   }
 
@@ -94,8 +92,9 @@ const ListHero: React.FC = () => {
     <BodyList >
       <TitleList>Nome</TitleList>
       <FlatList
+      style={{height:'auto'}}
         data={heros}
-        renderItem={({ item }) => renderItem(item)}
+        renderItem={({ item, index }) => renderItem(item, index)}
         keyExtractor={(hero, __) => String(hero.id)}
       />
       <Pagination

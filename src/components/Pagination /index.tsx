@@ -49,7 +49,7 @@ const Pagination: React.FC<IPaginationProps> = ({
     }
 
     function handleNext() {
-        if (offset - (totalPage - 1) < limit) return;
+        if ((totalPage - 1) - offset < limit) return;
         handlePage(offset + limit)
     }
 
