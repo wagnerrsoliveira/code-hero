@@ -7,7 +7,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Hero } from '../../models/Hero';
 import { ApiService } from '../../services/ApiService';
 import { Label, LabelLink, LoadContatiner, NameHero } from './styles';
-import { ParamList } from '../../utils/types';
+import { ParamList } from '../../types';
 import { PALETTE } from '../../assets/Colors';
 
 const { width } = Dimensions.get('screen')

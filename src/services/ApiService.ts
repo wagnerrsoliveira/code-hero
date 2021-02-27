@@ -1,15 +1,15 @@
 import md5 from "js-md5";
-import { ENV } from "../utils/Envs";
+import BuildConfig from "react-native-config";
 
-const { API_BASE_URL, PRIVATE_KEY, PUBLIC_KEY } = ENV;
+const { API_BASE_URL, PRIVATE_KEY, PUBLIC_KEY } = BuildConfig;
 
 export class ApiService {
 
+    
     private mountUrl(url: string, params?: string) {
         const timestamp = Date.now();
         const hash = md5.create()
-        hash.update(timestamp + PRIVATE_KEY + PUBLIC_KEY)
-
+        hash.update(timestamp + PRIVATE_KEY + PUBLIC_KEY)    
         return `${API_BASE_URL}${url}?ts=${timestamp}${params || ''}&apikey=${PUBLIC_KEY}&hash=${hash.hex()}`
     }
 

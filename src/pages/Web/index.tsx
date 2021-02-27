@@ -1,6 +1,6 @@
 import { RouteProp, useRoute } from '@react-navigation/native';
 import React from 'react';
-import { ParamList } from '../../utils/types';
+import { ParamList } from '../../types';
 import { WebView } from 'react-native-webview';
 import { LoadContatiner } from '../ListHero/styles';
 import { ActivityIndicator } from 'react-native';
