@@ -17,8 +17,8 @@ const Pagination: React.FC<IPaginationProps> = ({
         const firstPage = Math.floor(pageNumber / maxCicleButton) * maxCicleButton;
         let lastPage = firstPage + maxCicleButton;
 
-        if (lastPage > Math.floor(totalPage / limit)) {
-            lastPage = Math.floor(totalPage / limit)
+        if (lastPage > Math.ceil(totalPage / limit)) {
+            lastPage = Math.ceil(totalPage / limit)
         }
 
         const itens = [];
@@ -26,7 +26,7 @@ const Pagination: React.FC<IPaginationProps> = ({
             itens.push(index)
         }
 
-        return itens.map((number) => renderNumberPageButton(number));
+        return itens;
     }
 
     function renderNumberPageButton(number: number) {
@@ -53,11 +53,15 @@ const Pagination: React.FC<IPaginationProps> = ({
         handlePage(offset + limit)
     }
 
+    const numbers = getNumbersPage();
+
+    if(!numbers.length) return null;
+    
     return (
         <ContainerPaignation>
             <ArrowLeft onPress={handlePrevious} />
             <ContainerNumbers>
-                {getNumbersPage()}
+                {numbers.map((number) => renderNumberPageButton(number))}
             </ContainerNumbers>
             <ArrowRight onPress={handleNext} />
         </ContainerPaignation>

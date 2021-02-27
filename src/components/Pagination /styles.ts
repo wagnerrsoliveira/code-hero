@@ -7,7 +7,8 @@ export const ContainerPaignation = styled.View`
   align-items: center;
   justify-content: center;
   background-color:${PALETTE.WHITE};
-  padding:30px 24px;    
+  padding:30px 24px;
+  padding-top:18px;  
 `;
 
 export const ContainerNumbers = styled.View`
