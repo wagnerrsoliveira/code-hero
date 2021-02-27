@@ -5,4 +5,10 @@ export type Hero = {
         path:string;
         extension:string;
     }
+    urls:Url[];
+}
+
+export type Url ={
+    type: string;
+    url: string;
 }
