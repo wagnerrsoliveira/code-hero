@@ -6,7 +6,7 @@ import { PALETTE } from "../../assets/Colors";
 export const TouchableContainer = styled.TouchableNativeFeedback``;
 
 export const DescriptionStyled = styled.Text`
-    font-family: Roboto Regular;
+    font-family: Roboto-Regular;
     font-size:18px;
     color:${PALETTE.BLACK};  
     padding: 0 25px;

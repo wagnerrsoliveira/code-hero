@@ -20,7 +20,6 @@ export const MarkerUnderline = styled.View`
 export const Title = styled.Text`
     font-family: Roboto-Black;
     font-size:16px;
-    font-weight:bold;
     color:${PALETTE.PRIMARY};  
 `;
 
@@ -38,7 +37,7 @@ export const BodyList = styled.View`
 
 
 export const TitleList = styled.Text`
-    font-family: Roboto Regular;
+    font-family: Roboto-Regular;
     font-size:16px;
     color:${PALETTE.WHITE};  
     padding:12px 108px;

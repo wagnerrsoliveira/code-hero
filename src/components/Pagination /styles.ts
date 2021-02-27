@@ -23,15 +23,16 @@ export const CicleView = styled.View<IActive>`
   background-color:${(props) => props.isActive ? PALETTE.PRIMARY : PALETTE.WHITE};
   border-color:${(props) => props.isActive ? PALETTE.WHITE : PALETTE.PRIMARY};
   border-width:1px;
-  border-radius:16px;
-  width:32px;
-  height:32px;
+  border-radius:100px;
+  width:40px;
+  height:40px;
   margin:0px 10px;        
 `;
 
 export const NumberText = styled.Text<IActive>`
   color:${(props) => props.isActive ? PALETTE.WHITE : PALETTE.PRIMARY};
   font-size: 21px;  
+  font-family: Roboto-Regular;
 `;
 
 export const ArrowLeft = styled.TouchableOpacity`

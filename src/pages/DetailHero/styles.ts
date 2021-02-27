@@ -10,6 +10,7 @@ export const NameHero = styled.Text`
        border-top-right-radius:16px;
        background-color:${PALETTE.WHITE};
        font-size:24px; 
+       font-family: Roboto-Light;
        color:${PALETTE.BLACK};
 `;
 
@@ -17,6 +18,7 @@ export const NameHero = styled.Text`
 export const Label = styled.Text`
     font-size:18px;
     padding: 8px;
+    font-family: Roboto-Regular;
 `;
 
 export const LabelLink = styled.Text`
@@ -26,6 +28,7 @@ export const LabelLink = styled.Text`
     background-color:${PALETTE.GREY_LIGHT};
     margin-bottom:10px;
     color:${PALETTE.WHITE};
+    font-family: Roboto-Light;
 `;
 
 export const LoadContatiner = styled.View`
