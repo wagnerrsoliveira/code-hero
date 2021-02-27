@@ -10,12 +10,12 @@ export class ApiService {
         const hash = md5.create()
         hash.update(timestamp + PRIVATE_KEY + PUBLIC_KEY)
 
-        return `${API_BASE_URL}${url}?ts=${timestamp}${params || '' }&apikey=${PUBLIC_KEY}&hash=${hash.hex()}`
+        return `${API_BASE_URL}${url}?ts=${timestamp}${params || ''}&apikey=${PUBLIC_KEY}&hash=${hash.hex()}`
     }
 
     async geHeros(name: string, offset: number) {
         let params = "";
-        
+
         if (!!name) {
             params += `&nameStartsWith=${name}`;
         }
@@ -42,15 +42,15 @@ export class ApiService {
             const url = this.mountUrl(`characters/${id}`);
             const response = await fetch(url);
             const responseJson = await response.json()
-            console.log(url)
+
             if (responseJson.code === 200) {
-                
+
                 const [result] = responseJson.data?.results;
                 return { result, isSuccess: true };
             }
-            console.log(responseJson)
+
             return { isSuccess: false };
-        } catch (error) {            
+        } catch (error) {
             return { isSuccess: false };
         }
     }

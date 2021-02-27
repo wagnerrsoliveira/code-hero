@@ -1,25 +1,26 @@
-import { RouteProp, useRoute } from '@react-navigation/native';
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import React, { useEffect } from 'react';
 import { useState } from 'react';
-import { Dimensions, TextInput, TouchableNativeFeedback } from 'react-native';
+import { ActivityIndicator, Dimensions } from 'react-native';
 import { SafeAreaView, ImageBackground, ToastAndroid } from 'react-native';
-import { Text } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { PALETTE } from '../../assets/Colors';
 import { Hero } from '../../models/Hero';
 import { ApiService } from '../../services/ApiService';
-import { Label, LabelLink, NameHero } from './styles';
-import { ParamList } from './types';
+import { Label, LabelLink, LoadContatiner, NameHero } from './styles';
+import { ParamList } from '../../utils/types';
+import { PALETTE } from '../../assets/Colors';
 
 const { width } = Dimensions.get('screen')
 
 const DetailHero: React.FC = () => {
 
+  const navigation = useNavigation();
   const route = useRoute<RouteProp<ParamList, 'DetailHero'>>();
 
   const api = new ApiService();
 
   const [hero, setHero] = useState<Hero>();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     async function loadDetails() {
@@ -36,27 +37,41 @@ const DetailHero: React.FC = () => {
     loadDetails();
   }, [])
 
-  if (!hero) return null;
+  function handleGoToLink(link: string) {
+    navigation.navigate('Web', { link });
+  }
 
+  if (loading) {
+    return (
+      <LoadContatiner>
+        <ActivityIndicator size={32} color={PALETTE.PRIMARY} />
+      </LoadContatiner>
+    )
+  }
+
+  if (!hero) return null;
 
   return (
     <SafeAreaView>
       <ImageBackground
         source={{ uri: `${hero.thumbnail.path}.${hero.thumbnail.extension}` }}
-        style={{ height: 200, width , marginBottom:32}}
+        style={{ height: 200, width, marginBottom: 32 }}
       >
         <NameHero >{hero.name}</NameHero>
       </ImageBackground>
-      
+
       <Label>Links</Label>
 
-      {hero.urls.map((url,index)=>(
-        <TouchableOpacity
-          key={`${index}`}
-        >
-          <LabelLink>{`${url.type} >`}</LabelLink>
-        </TouchableOpacity>
-      ))}
+      {
+        hero.urls.map((url, index) => (
+          <TouchableOpacity
+            key={`${index}`}
+            onPress={() => handleGoToLink(url.url)}
+          >
+            <LabelLink>{`${url.type} >`}</LabelLink>
+          </TouchableOpacity>
+        ))
+      }
     </SafeAreaView>
   )
 }

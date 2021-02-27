@@ -27,3 +27,9 @@ export const LabelLink = styled.Text`
     margin-bottom:10px;
     color:${PALETTE.WHITE};
 `;
+
+export const LoadContatiner = styled.View`
+    flex: 1;
+    align-items: center; 
+    justify-content: center; 
+`;
