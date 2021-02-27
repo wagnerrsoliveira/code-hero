@@ -22,6 +22,7 @@
     "react-native-safe-area-context": "^3.1.9",
     "react-native-safe-area-view": "react-native-community/react-native-safe-area-view",
     "react-native-screens": "^2.17.1",
+    "react-native-webview": "^11.2.3",
     "styled-components": "^5.2.1"
   },
   "devDependencies": {
