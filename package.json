@@ -1,13 +1,14 @@
 {
-  "name": "CodeHero",
+  "name": "code-hero",
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "android": "npx react-native run-android",
+    "android": "yarn emulator & npx react-native run-android && yarn start",
     "ios": "react-native run-ios",
     "start": "npx react-native start",
     "test": "jest",
-    "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "emulator":"emulator -avd Pixel_3_API_29 -no-snapshot"
   },
   "dependencies": {
     "@react-native-community/masked-view": "^0.1.10",

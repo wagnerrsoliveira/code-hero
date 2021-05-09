@@ -1,37 +1,39 @@
 import styled from 'styled-components/native';
-import { PALETTE } from '../../assets/Colors';
-import { IActive } from './types';
+import {PALETTE} from '../../assets/Colors';
+import {IActive} from './types';
 
 export const ContainerPaignation = styled.View`
-  flex-direction:row;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
-  background-color:${PALETTE.WHITE};
-  padding:30px 24px;
-  padding-top:18px;  
+  background-color: ${PALETTE.WHITE};
+  padding: 30px 24px;
+  padding-top: 18px;
 `;
 
 export const ContainerNumbers = styled.View`
-  flex-direction:row;
-  background-color:${PALETTE.WHITE};
-  padding:0px 60px;   
+  flex-direction: row;
+  background-color: ${PALETTE.WHITE};
+  padding: 0px 60px;
 `;
 
 export const CicleView = styled.View<IActive>`
-  justify-content:center;
-  align-items:center;
-  background-color:${(props) => props.isActive ? PALETTE.PRIMARY : PALETTE.WHITE};
-  border-color:${(props) => props.isActive ? PALETTE.WHITE : PALETTE.PRIMARY};
-  border-width:1px;
-  border-radius:100px;
-  width:40px;
-  height:40px;
-  margin:0px 10px;        
+  justify-content: center;
+  align-items: center;
+  background-color: ${(props) =>
+    props.isActive ? PALETTE.PRIMARY : PALETTE.WHITE};
+  border-color: ${(props) =>
+    props.isActive ? PALETTE.WHITE : PALETTE.PRIMARY};
+  border-width: 1px;
+  border-radius: 100px;
+  width: 40px;
+  height: 40px;
+  margin: 0px 10px;
 `;
 
 export const NumberText = styled.Text<IActive>`
-  color:${(props) => props.isActive ? PALETTE.WHITE : PALETTE.PRIMARY};
-  font-size: 21px;  
+  color: ${(props) => (props.isActive ? PALETTE.WHITE : PALETTE.PRIMARY)};
+  font-size: 21px;
   font-family: Roboto-Regular;
 `;
 
@@ -47,7 +49,7 @@ export const ArrowLeft = styled.TouchableOpacity`
 `;
 
 export const ArrowRight = styled.TouchableOpacity`
-   border-top-width: 16px;
+  border-top-width: 16px;
   border-left-width: 32px;
   border-bottom-width: 16px;
   border-style: solid;
@@ -56,4 +58,3 @@ export const ArrowRight = styled.TouchableOpacity`
   border-left-color: ${PALETTE.PRIMARY};
   border-bottom-color: transparent;
 `;
-
