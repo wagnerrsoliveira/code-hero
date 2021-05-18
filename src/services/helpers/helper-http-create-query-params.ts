@@ -1,15 +1,14 @@
+import {isEmptyString} from '../../utils/String';
+
 export type TParamsObject = {
   [key: string]: string;
 };
 
-export function createHttpQueryParams(paramsObject: TParamsObject) {
-  const keysObject = Object.keys(paramsObject);
-  let queryParams = '';
-  for (let index = 0; index < keysObject.length; index++) {
-    const key = keysObject[index];
-    const value = paramsObject[key];
-    const firstChar = index === 0 ? '?' : '&';
-    queryParams += `${firstChar}${key}=${value}`;
-  }
-  return queryParams;
+export function createHttpQueryParams<T>(paramsObject: T) {
+  const queryParams = Object.entries(paramsObject)
+    .filter((attr) => attr.every((value) => !isEmptyString(value)))
+    .map((attr) => attr.join('='))
+    .join('&');
+
+  return queryParams ? `?${queryParams}` : '';
 }
