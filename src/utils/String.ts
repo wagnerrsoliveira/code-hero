@@ -1,3 +1,3 @@
-export const isEmptyString = (value: any) => {
-  return [null, undefined, ''].includes(value);
+export const isEmptyString = <T>(value: T) => {
+  return ['null', 'undefined', ''].includes(String(value));
 };
