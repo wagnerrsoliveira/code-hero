@@ -1,6 +1,5 @@
 import React from 'react';
-import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
+import {createAppContainer, createStackNavigator} from 'react-navigation';
 import ListHero from './pages/ListHero';
 import DetailHero from './pages/DetailHero';
 import {PALETTE} from './assets/Colors';
